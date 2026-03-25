@@ -1,3 +1,13 @@
+# Setup Check
+
+**If this file still contains the literal text `[YOUR_NAME]`, the system is not yet configured.**
+Read and follow `_setup/wizard.md` immediately. Do not proceed with normal KB operations until setup is complete.
+
+**If the user says "reconfigure", "change settings", "add tools", or "add clients":**
+Read `_setup/wizard.md` and run only the relevant phase (Phase 2 for tools, Phase 3 for adding work units, Phase 4 for automations, or the full wizard for a complete reconfigure).
+
+---
+
 # Knowledge Base
 
 This is [YOUR_NAME]'s knowledge base for managing [WORK_UNITS]. It contains profiles, activity logs, strategies, and meeting notes.
