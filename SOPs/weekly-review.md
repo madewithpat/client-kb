@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Generate a summary of work done across all [WORK_UNIT_PLURAL] each week. The output is a structured review you can use for reporting, CRM updates, team standups, or your own records.
+Generate a summary of work done across all projects and areas each week. The output is a structured review you can use for reporting, CRM updates, team standups, or your own records.
 
 ## When
 
@@ -12,7 +12,7 @@ Every Friday (or when [YOUR_NAME] asks for a weekly review).
 
 ### Layer 1 — Continuous Accumulation (during the week)
 
-The KB `activity-log.md` for each [WORK_UNIT] is the **running buffer** where context accumulates throughout the week:
+The KB `activity-log.md` for each item is the **running buffer** where context accumulates throughout the week:
 
 | Trigger | What happens | Where it lands |
 |---------|-------------|----------------|
@@ -29,9 +29,9 @@ When the weekly review runs:
 
 1. **Read activity logs** — rich context from meetings, work sessions
 2. **Check calendar** (if connected) — meetings that happened this week
-3. **Identify gaps** — [WORK_UNIT_PLURAL] with activity but no KB context
+3. **Identify gaps** — projects and areas with activity but no KB context
 4. **Nudge [YOUR_NAME]** — "These need context: share notes or a quick summary"
-5. **Compile review** — structured summary per [WORK_UNIT]
+5. **Compile review** — structured summary per item
 6. **Present for approval** — [YOUR_NAME] reviews and edits
 7. **Update KB** — append weekly review entries to activity logs
 
@@ -48,7 +48,7 @@ A good weekly review entry includes (where applicable):
 
 ## Gap Identification
 
-[WORK_UNIT_PLURAL] that have activity but thin KB context typically need one of:
+projects and areas that have activity but thin KB context typically need one of:
 
 1. **Meeting transcript** — share a recording link, Claude processes it
 2. **Data or report** — share relevant data, Claude extracts key points

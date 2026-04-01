@@ -5,11 +5,20 @@
 - **Role:** [Your role]
 - **Focus:** [What you do]
 
-## My [WORK_UNIT_PLURAL]
+## My Projects
 
-<!-- Add links as you onboard, e.g.:
-- [[Acme Corp]]
-- [[Side Project]]
+<!-- Active projects across all sub-types:
+- [[Acme Website Redesign]] (ggt-client)
+- [[Q2 Performance Reviews]] (ggt-internal)
+- [[Learn Spanish]] (personal)
+-->
+
+## My Areas
+
+<!-- Ongoing responsibilities across all sub-types:
+- [[Acme Corp]] (ggt-client)
+- [[Team Leadership]] (ggt-internal)
+- [[Health & Fitness]] (personal)
 -->
 
 ## Tools I Use

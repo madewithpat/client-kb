@@ -31,7 +31,7 @@ From whatever source is available, extract:
 
 ### Step 2: Create Meeting Note
 
-Save to `[WORK_FOLDER]/{name}/meetings/YYYY-MM-DD-topic.md` using the meeting note template:
+Look up the item in `_templates/project-mapping.md` to get its Folder path. Save to `{Folder}meetings/YYYY-MM-DD-topic.md` using the meeting note template:
 
 ```markdown
 ---
@@ -58,7 +58,7 @@ source: [Fireflies/Otter/Manual/etc.]
 
 ### Step 3: Update Activity Log
 
-Add a rich entry to `activity-log.md`:
+Add a rich entry to the item's `activity-log.md` (path from mapping):
 
 ```markdown
 ## YYYY-MM-DD
@@ -69,7 +69,9 @@ Add a rich entry to `activity-log.md`:
 
 ### Step 4: Update Strategy (if applicable)
 
-If the meeting included strategic decisions (new goals, changed priorities, metric updates, scope changes), update `strategy.md`.
+If the meeting included strategic decisions (new goals, changed priorities, metric updates, scope changes):
+- **Area**: update `strategy.md`
+- **Project**: update `brief.md` (the Important Context or Timeline sections)
 
 ### Step 5: Generate Follow-up (if requested)
 

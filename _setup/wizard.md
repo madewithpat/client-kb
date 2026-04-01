@@ -22,7 +22,7 @@ Follow these strictly throughout the entire wizard:
 
 When triggered by CLAUDE.md, start with this welcome message:
 
-> Welcome! This vault is a knowledge base that works with Claude Code. It automatically remembers context about your work, logs what you do, and helps you stay on top of meetings and reviews.
+> Welcome! This vault is a PARA-structured knowledge base that works with Claude Code. It automatically remembers context about your projects and areas, logs what you do, and helps you stay on top of meetings and reviews.
 >
 > Let's get you set up.
 
@@ -31,8 +31,8 @@ Then immediately ask the mode question:
 **Use AskUserQuestion:**
 - Question: "How would you like to set up?"
 - Options:
-  - **Quick setup** — "Sensible defaults, done in 2 minutes. English, 'Clients' folder, no integrations. You can customize later."
-  - **Custom setup** — "I'll ask what you do, what tools you use, and tailor everything. Takes 5-10 minutes."
+  - **Quick setup** — "Sensible defaults, done in 2 minutes. No integrations. You can customize later."
+  - **Custom setup** — "I'll ask what tools you use, add your initial projects and areas, and tailor everything. Takes 5-10 minutes."
 
 ---
 
@@ -44,7 +44,7 @@ If Quick setup is chosen:
 Create TodoWrite:
 ```
 □ Set up your profile
-□ Configure your vault
+□ Create vault structure
 □ Ready to go
 ```
 
@@ -53,34 +53,32 @@ Ask in chat: "What's your first name?"
 
 Mark "Set up your profile" as in_progress.
 
-### Step 2: Apply defaults
-Read `_setup/quickstart-defaults.md` for the default values.
-
+### Step 2: Apply configuration
 Detect the vault root (the directory containing this file's parent — i.e., the repo root).
 
 Replace all placeholders across every file in the vault:
 - `[YOUR_NAME]` → their name
 - `[VAULT_ROOT]` → detected absolute path
-- `[WORK_UNIT]` → "client"
-- `[WORK_UNITS]` → "clients"
-- `[WORK_UNIT_PLURAL]` → "clients"
-- `[WORK_FOLDER]` → "Clients"
-- `[WORK_UNIT_PLURAL]` → "Clients" (in headers/titles context)
 
-Files to update: CLAUDE.md, _templates/project-mapping.md, _templates/_overview.md, _templates/client-profile.md, _templates/solution.md, SOPs/meeting-processing.md, SOPs/weekly-review.md, SOPs/available-automations.md, _setup/settings.local.json
+Files to update: CLAUDE.md, _templates/project-mapping.md, _templates/_overview.md, SOPs/meeting-processing.md, SOPs/weekly-review.md, SOPs/available-automations.md, _setup/settings.local.json
 
 Mark "Set up your profile" as completed.
 
 ### Step 3: Create structure
-Mark "Configure your vault" as in_progress.
+Mark "Create vault structure" as in_progress.
 
-- Create `Clients/` directory
-- Create `_solutions/` directory (for solution documentation)
-- Copy `_templates/_overview.md` → `Clients/_overview.md` (with their name and "Clients" filled in)
-- Copy `_setup/settings.local.json` → `.claude/settings.local.json` (create `.claude/` if needed)
-- Create `.env` from `.env.example`
+Create directories:
+- `Projects/`
+- `Areas/`
+- `Archives/Projects/`
+- `Archives/Areas/`
+- `_solutions/`
 
-Mark "Configure your vault" as completed.
+Copy `_templates/_overview.md` → `_overview.md` (with their name filled in).
+Copy `_setup/settings.local.json` → `.claude/settings.local.json` (create `.claude/` if needed).
+Create `.env` from `.env.example`.
+
+Mark "Create vault structure" as completed.
 
 ### Step 4: Done
 Mark "Ready to go" as completed.
@@ -88,13 +86,18 @@ Mark "Ready to go" as completed.
 Send:
 > You're all set, [name]!
 >
+> **Your vault is organized using PARA:**
+> - `Projects/` — time-bound work with a clear goal
+> - `Areas/` — ongoing responsibilities (clients, team roles, personal domains)
+> - `Archives/` — completed or inactive items
+>
 > **How to use this:**
-> - Mention a client name and I'll load their context
+> - Mention a project or area by name and I'll load its context
 > - After I do meaningful work, I'll log it automatically
 > - Share a meeting transcript and I'll turn it into structured notes
 > - Say "weekly review" on Fridays for a summary
 >
-> **To add clients:** Say "add clients" and give me names — I'll create the folders.
+> **To add items:** Say "add projects" or "add areas" and give me names — I'll create the folders.
 > **To connect tools:** Say "add tools" anytime to connect Google Calendar, meeting recorders, or task managers.
 
 ---
@@ -107,9 +110,9 @@ If Custom setup is chosen:
 Create TodoWrite:
 ```
 □ Set up your profile
-□ Configure vault structure
+□ Create vault structure
 □ Connect your tools
-□ Add your [work units]
+□ Add your projects and areas
 □ Choose automations
 □ Verify everything works
 ```
@@ -123,22 +126,7 @@ Mark "Set up your profile" as in_progress.
 **Step 1.1 — Name**
 Ask in chat: "What's your first name?"
 
-**Step 1.2 — Work type**
-Use AskUserQuestion:
-- Question: "What do you manage in your day-to-day work?"
-- Options:
-  - **Clients** — "Freelancers, consultants, agencies — you serve clients"
-  - **Projects** — "Developers, designers, PMs — you run projects"
-  - **Accounts** — "Sales, account management — you manage accounts"
-  - (Other will be available as free text)
-
-Map the answer:
-- Clients → WORK_UNIT="client", WORK_FOLDER="Clients"
-- Projects → WORK_UNIT="project", WORK_FOLDER="Projects"
-- Accounts → WORK_UNIT="account", WORK_FOLDER="Accounts"
-- Other → use whatever they type, derive folder name by capitalizing
-
-**Step 1.3 — Language**
+**Step 1.2 — Language**
 Use AskUserQuestion:
 - Question: "What language should generated content be in? (Follow-up emails, reviews, etc.)"
 - Options:
@@ -148,8 +136,12 @@ Use AskUserQuestion:
 
 Note the language — if not English, add an instruction to CLAUDE.md's auto-log section specifying the language for generated content.
 
-**Step 1.4 — Apply configuration**
-Detect vault root. Replace all placeholders across all files (same list as Quick path, but with their chosen values).
+**Step 1.3 — Apply configuration**
+Detect vault root. Replace all placeholders:
+- `[YOUR_NAME]` → their name
+- `[VAULT_ROOT]` → detected absolute path
+
+Files to update: CLAUDE.md, _templates/project-mapping.md, _templates/_overview.md, SOPs/meeting-processing.md, SOPs/weekly-review.md, SOPs/available-automations.md, _setup/settings.local.json
 
 If not English, append to CLAUDE.md after the Data Sources section:
 ```markdown
@@ -161,16 +153,16 @@ Generate all client-facing content (follow-up emails, weekly reviews, meeting su
 
 Mark "Set up your profile" as completed.
 
-Confirm: "Profile configured for [name] — you manage [work units]."
-
 ---
 
-### Phase 2: Tools
+### Phase 2: Vault Structure + Tools
 
-Create `_solutions/` directory if it doesn't exist.
+Create directories: `Projects/`, `Areas/`, `Archives/Projects/`, `Archives/Areas/`, `_solutions/`.
+Copy `_templates/_overview.md` → `_overview.md`.
 Copy `_setup/settings.local.json` → `.claude/settings.local.json` (create `.claude/` if needed).
 Create `.env` from `.env.example`.
-Mark "Configure vault structure" as completed.
+Mark "Create vault structure" as completed.
+
 Mark "Connect your tools" as in_progress.
 
 **Step 2.1 — Detect existing connections**
@@ -199,13 +191,13 @@ Use AskUserQuestion (multi-select):
 3. Wait for user to connect
 4. Test: fetch this week's events
 5. Report: "✓ Google Calendar connected — I can see [N] events this week"
-6. Add MCP permissions to `.claude/settings.local.json` (detect UUID from the connected tool)
+6. Add MCP permissions to `.claude/settings.local.json`
 7. Ask: "Do you have a company email domain? (e.g., @yourcompany.com) This helps me identify external meetings."
    - If yes → update meeting filter in `_templates/project-mapping.md`
    - If no → "I'll flag all meetings and you tell me which are relevant."
 
 **Meeting recorder:**
-1. Ask: "Which recording tool do you use?" (free text or AskUserQuestion: Fireflies / Otter / Fathom / Other)
+1. Ask: "Which recording tool do you use?" (Fireflies / Otter / Fathom / Other)
 2. Check if Claude in Chrome is connected
 3. If not connected: "To auto-fetch transcripts, you need the Claude in Chrome browser extension. Want to set it up?"
    - If yes: guide install → test → add permissions
@@ -228,33 +220,59 @@ Mark "Connect your tools" as completed.
 
 ---
 
-### Phase 3: Add Work Units
+### Phase 3: Add Projects and Areas
 
-Mark "Add your [work units]" as in_progress.
+Mark "Add your projects and areas" as in_progress.
 
-Ask in chat: "Let's add your [work units]. What are their names? List as many as you want, or say 'skip' to add them later."
+Explain: "The KB is organized around two things: **Areas** (ongoing responsibilities — client relationships, team roles, personal domains) and **Projects** (time-bound work with a clear goal). Let's add yours."
 
-If they provide names:
-1. For each name:
-   - Create `[WORK_FOLDER]/{Name}/` with profile.md, activity-log.md, strategy.md, meetings/
-   - Fill in the `{{title}}` placeholders with the name
-   - Add to `_templates/project-mapping.md`
+**Step 3.1 — Areas first**
 
-2. Ask: "Any short names or nicknames you use for these? (e.g., 'Acme' for 'Acme Corporation')"
-   - If yes → add to aliases table
+Ask in chat: "What are your main areas of ongoing responsibility? These could be client relationships, internal roles, or personal domains. List as many as you want, or say 'skip'."
 
-3. Ask using AskUserQuestion:
-   - Question: "Want to fill in any profiles now?"
+For each area name provided:
+1. Ask sub-type using AskUserQuestion:
+   - Question: "What type is [name]?"
    - Options:
-     - **Yes, let's do one** — "I'll walk you through the first one as an example"
-     - **No, I'll do it as I go** — "When you mention a name, I'll load whatever context exists"
+     - **ggt-client** — "A client at GGT"
+     - **ggt-internal** — "An internal GGT responsibility"
+     - **personal** — "A personal area"
+2. Generate a slug (lowercase, hyphens, no special chars)
+3. Create `Areas/{slug}/` with:
+   - `profile.md` from `_templates/area-profile.md` (fill in name and sub-type)
+   - `strategy.md` from `_templates/strategy.md` (fill in name)
+   - `activity-log.md` from `_templates/activity-log.md` (fill in name)
+   - `meetings/` directory
+4. Add to `_templates/project-mapping.md`
 
-   If yes: walk through profile.md for their first work unit — ask about overview, contacts, tools, current status.
+Ask: "Any short names or nicknames for these? (e.g., 'Acme' for 'Acme Corporation')"
+- If yes → add to the Aliases table in project-mapping.md
 
-If they say "skip":
-"No problem. Just say 'add clients' (or whatever their term is) anytime."
+**Step 3.2 — Projects**
 
-Mark "Add your [work units]" as completed.
+Ask in chat: "Now let's add active projects — things with a specific goal and a likely end date. List them, or say 'skip'."
+
+For each project name provided:
+1. Ask sub-type (same options as above)
+2. Ask: "Does this belong to one of your areas? If so, which one? (Or press enter to leave it unlinked)"
+3. Generate a slug
+4. Create `Projects/{slug}/` with:
+   - `brief.md` from `_templates/project-brief.md` (fill in name, sub-type, parent_area)
+   - `activity-log.md` from `_templates/activity-log.md` (fill in name)
+   - `meetings/` directory
+5. Add to `_templates/project-mapping.md`
+
+**Step 3.3 — Optional profile fill-in**
+
+Use AskUserQuestion:
+- Question: "Want to fill in any profiles or briefs now?"
+- Options:
+  - **Yes, walk me through one** — "I'll ask about the first area as an example"
+  - **No, I'll do it as I go** — "When you mention a name, I'll load whatever context exists"
+
+If yes: walk through `profile.md` for their first area — ask about overview, contacts, scope, status.
+
+Mark "Add your projects and areas" as completed.
 
 ---
 
@@ -267,12 +285,12 @@ Explain briefly: "The KB can run tasks automatically on a schedule — like comp
 Build the list based on what was connected in Phase 2:
 
 **Always show:**
-- Weekly Review (Friday 14:00) — "Compiles a summary of your week's work"
-- Safety Net (Wednesday 08:00) — "Catches forgotten follow-ups and quiet [work units]"
+- Weekly Review (Friday 14:00) — "Compiles a summary of your week's work across all projects and areas"
+- Safety Net (Wednesday 08:00) — "Catches forgotten follow-ups and quiet items"
 - Systems Review (Friday 15:00) — "Weekly analysis of what's working and what to improve"
 
 **Show if Google Calendar connected:**
-- Review Nudge (Friday 08:00) — "Flags [work units] that need context before the weekly review"
+- Review Nudge (Friday 08:00) — "Flags items that need context before the weekly review"
 - Meeting Prep (Weekday mornings) — "Generates talking points before meetings"
 
 **Show if calendar + recorder + Claude in Chrome:**
@@ -297,7 +315,7 @@ Mark "Choose automations" as completed.
 Mark "Verify everything works" as in_progress.
 
 **Test 1: Context loading**
-Pick one of their work units (or use a hypothetical if none were added).
+Pick one of their areas (or use a hypothetical if none were added).
 "Let me test context loading..." → read the profile.md → "✓ I can load [name]'s context."
 
 **Test 2: Connected tools** (for each)
@@ -310,8 +328,8 @@ Pick one of their work units (or use a hypothetical if none were added).
 Write to `_daily/YYYY-MM-DD.md`:
 ```
 ### HH:MM — Knowledge Base Setup
-- What: Set up KB with [N] [work units], [N] tools connected, [N] automations
-- Next: Fill in profiles as you go
+- What: Set up KB with [N] areas, [N] projects, [N] tools connected, [N] automations
+- Next: Fill in profiles and briefs as you go
 ```
 "✓ Daily journal works."
 
@@ -324,12 +342,13 @@ Mark "Verify everything works" as completed.
 ```
 All done, [name]!
 
-[WORK_UNIT_PLURAL]: [list or "none yet — say 'add [units]' to create some"]
+Areas: [list or "none yet — say 'add areas' to create some"]
+Projects: [list or "none yet — say 'add projects' to create some"]
 Tools: [list or "none — say 'add tools' anytime"]
 Automations: [list or "none — say 'add automations' anytime"]
 
 Day-to-day:
-- Mention a [work unit] → I load their context
+- Mention a project or area → I load its context
 - After work → I log what was done
 - Share a meeting link → I create structured notes
 - "weekly review" on Fridays → I compile a summary
@@ -343,8 +362,9 @@ Day-to-day:
 When triggered by CLAUDE.md for reconfiguration:
 
 1. Check what the user asked for:
-   - "add tools" / "connect tools" → run Phase 2 only
-   - "add [work units]" → run Phase 3 only
+   - "add tools" / "connect tools" → run Phase 2 tools section only
+   - "add projects" → run Phase 3 projects section only
+   - "add areas" → run Phase 3 areas section only
    - "add automations" → run Phase 4 only
    - "reconfigure" / "change settings" → offer choice of which phase to re-run
 
@@ -352,6 +372,7 @@ When triggered by CLAUDE.md for reconfiguration:
    - Question: "What do you want to change?"
    - Options:
      - **Connect more tools**
-     - **Add [work units]**
+     - **Add areas**
+     - **Add projects**
      - **Change automations**
      - **Full reconfigure** — "Start the setup from scratch"

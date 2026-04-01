@@ -6,11 +6,8 @@ These values are applied when the user chooses Quick setup.
 |-------------|---------------|
 | `[YOUR_NAME]` | (asked during setup) |
 | `[VAULT_ROOT]` | (auto-detected) |
-| `[WORK_UNIT]` | client |
-| `[WORK_UNITS]` | clients |
-| `[WORK_UNIT_PLURAL]` | clients |
-| `[WORK_FOLDER]` | Clients |
 
+Vault structure: PARA (fixed — `Projects/`, `Areas/`, `Archives/Projects/`, `Archives/Areas/`)
 Language: English
 Integrations: None (added later via "add tools")
 Automations: None (added later via "add automations")

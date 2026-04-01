@@ -3,16 +3,16 @@
 **If this file still contains the literal text `[YOUR_NAME]`, the system is not yet configured.**
 Read and follow `_setup/wizard.md` immediately. Do not proceed with normal KB operations until setup is complete.
 
-**If the user says "reconfigure", "change settings", "add tools", or "add clients":**
-Read `_setup/wizard.md` and run only the relevant phase (Phase 2 for tools, Phase 3 for adding work units, Phase 4 for automations, or the full wizard for a complete reconfigure).
+**If the user says "reconfigure", "change settings", "add tools", "add projects", or "add areas":**
+Read `_setup/wizard.md` and run only the relevant phase (Phase 2 for tools, Phase 3 for adding items, Phase 4 for automations, or the full wizard for a complete reconfigure).
 
 ---
 
 # Knowledge Base
 
-This is [YOUR_NAME]'s knowledge base for managing [WORK_UNITS]. It contains profiles, activity logs, strategies, and meeting notes.
+This is [YOUR_NAME]'s PARA-structured knowledge base. It contains projects, areas of responsibility, activity logs, strategies, and meeting notes across work (GGT client, GGT internal) and personal life.
 
-Claude should treat this KB as the single source of truth for all [WORK_UNIT] context.
+Claude should treat this KB as the single source of truth for all project and area context.
 
 > **Vault root:** `[VAULT_ROOT]`
 > All relative paths in this file are relative to this root. Always prepend this root when constructing absolute paths.
@@ -21,24 +21,29 @@ Claude should treat this KB as the single source of truth for all [WORK_UNIT] co
 
 ## Auto-Read: Context Loading
 
-**ALWAYS** do this when a [WORK_UNIT] is mentioned by name or abbreviation:
+**ALWAYS** do this when a project or area is mentioned by name or abbreviation:
 
-1. Read their `profile.md` — gives you context, contacts, services, goals
-2. If the conversation involves recent work or history, also read `activity-log.md`
-3. If strategy, priorities, or planning is discussed, also read `strategy.md`
+1. Read `_templates/project-mapping.md` to find the item's Category and Folder.
+2. Based on Category:
+   - **Area**: Read `profile.md` — gives you context, contacts, scope, status. If planning or strategy is discussed, also read `strategy.md`. If recent history is relevant, read `activity-log.md`.
+   - **Project**: Read `brief.md` — gives you goal, scope, deadline, deliverables. If recent history is relevant, read `activity-log.md`. If the project has a Parent Area, also read that area's `profile.md` for relationship context.
 
 Do this silently. Do not tell [YOUR_NAME] you're reading files — just have the context ready.
 
 ### Path Resolution
 
-To resolve any [WORK_UNIT] name to an absolute file path:
+To resolve any name to an absolute file path:
 
-1. Read `_templates/project-mapping.md` — the single source of truth for names, folder paths, and aliases.
-2. Match the name (or abbreviation) to a row in the mapping table.
-3. Prepend the vault root to the folder path.
-4. Append the target file (`profile.md`, `activity-log.md`, `strategy.md`, or `meetings/`).
+1. Read `_templates/project-mapping.md` — the single source of truth for names, categories, folder paths, and aliases.
+2. Match the name (or alias) to a row in the mapping table.
+3. Get the Category (Project or Area) and Folder path.
+4. Prepend the vault root to the folder path.
+5. Append the target file based on category:
+   - **Area files**: `profile.md`, `strategy.md`, `activity-log.md`, `meetings/`
+   - **Project files**: `brief.md`, `activity-log.md`, `meetings/`
 
-**Example:** "Acme profile" → mapping gives `[WORK_FOLDER]/Acme/` → `[VAULT_ROOT]/[WORK_FOLDER]/Acme/profile.md`
+**Example:** "Acme Corp" → mapping gives Category=Area, Folder=`Areas/acme-corp/` → `[VAULT_ROOT]/Areas/acme-corp/profile.md`
+**Example:** "Acme Website Redesign" → mapping gives Category=Project, Folder=`Projects/acme-website-redesign/` → `[VAULT_ROOT]/Projects/acme-website-redesign/brief.md`
 
 ---
 
@@ -48,7 +53,7 @@ Before starting non-trivial work, **silently** search for relevant past knowledg
 
 1. **Search `_solutions/`** — grep frontmatter and headings for matching problem types, tags, or area names relevant to the current task
 2. **Scan memory files** — check `MEMORY.md` index for relevant learnings (feedback, references, patterns)
-3. **Check recent activity** — if working on a [WORK_UNIT], scan their last 3-5 `activity-log.md` entries
+3. **Check recent activity** — if working on a project or area, scan their last 3-5 `activity-log.md` entries
 
 **When to trigger:** Tasks that involve debugging, building/modifying automations, processing data from external tools, or complex work.
 
@@ -60,7 +65,7 @@ If relevant solutions or learnings are found, use them to inform the approach. I
 
 ## Auto-Log: Activity Logging After Work
 
-After completing meaningful work for a [WORK_UNIT] during a session, **automatically** append a dated entry to their `activity-log.md`. Do not ask for permission.
+After completing meaningful work for a project or area during a session, **automatically** append a dated entry to their `activity-log.md`. Do not ask for permission.
 
 **Format:**
 
@@ -87,7 +92,9 @@ Write **rich** entries — not just "did X" but "did X because Y, result was Z, 
 
 ## Auto-Update: Strategy Changes
 
-When strategic decisions are made during a session (new goals, changed priorities, updated metrics, scope changes), **automatically** update the relevant sections in the [WORK_UNIT]'s `strategy.md`. Keep existing content and update the relevant sections — don't overwrite the whole file.
+When strategic decisions are made during a session (new goals, changed priorities, updated metrics, scope changes), **automatically** update the relevant sections in the area's `strategy.md`. Keep existing content and update only the relevant sections — don't overwrite the whole file.
+
+This applies to **Areas only**. For projects, capture scope or goal changes in `brief.md` instead.
 
 ---
 
@@ -112,27 +119,34 @@ Do NOT document routine work, simple fixes, or things that are obvious from the 
 
 ## Daily Journal
 
-At session **START**, silently read `_daily/YYYY-MM-DD.md` (today) and yesterday's if it exists. This provides cross-session continuity.
+At session **START**:
 
-At session **END** (if meaningful work was done), append to `_daily/YYYY-MM-DD.md`:
+1. Check if `_daily/YYYY-MM-DD.md` exists.
+   - **If it exists:** read the whole file — including any personal notes [YOUR_NAME] has already written. Do not modify it.
+   - **If it does not exist:** create it from `_templates/daily-note.md` with `{{date}}` replaced by today's date (YYYY-MM-DD). Only do this when starting a real working session, not for quick lookups.
+2. Also read yesterday's note (`_daily/YYYY-MM-DD.md` for yesterday) if it exists.
+
+At session **END** (if meaningful work was done), append only to the **Session Log** section of today's daily note:
 
 ```markdown
 ### HH:MM — [Brief title]
-- [WORK_UNIT](s): [names]
+- Item(s): [names and categories]
 - What: [1-2 sentences]
 - Next: [pending items]
 ```
 
-The daily journal complements per-[WORK_UNIT] activity logs. Activity logs are the detailed record; the daily journal is a lightweight cross-[WORK_UNIT] index of the day's work.
+**Never modify the Morning, Capture, or Evening sections.** Those belong to [YOUR_NAME].
+
+The daily journal complements per-item activity logs. Activity logs are the detailed record; the daily journal is a lightweight cross-item index of the day's work and a space for personal reflection.
 
 ---
 
 ## Graceful Degradation
 
 When a file is missing or empty:
-- **profile.md missing** → note internally, continue with available context, offer to scaffold after current task
-- **activity-log.md missing** → treat as new [WORK_UNIT] with no history, create the file with proper header when first logging
-- **strategy.md missing** → skip strategy context, do not fail
+- **profile.md or brief.md missing** → note internally, continue with available context, offer to scaffold after current task
+- **activity-log.md missing** → treat as new item with no history, create the file with proper header when first logging
+- **strategy.md missing** → skip strategy context, do not fail (Areas only)
 - **meetings/ missing** → create the directory when saving the first meeting note
 
 When a referenced file (SOP, template) does not exist:
@@ -161,25 +175,38 @@ After context compression, re-read the daily journal to recover state.
 | Meeting processing workflow | `SOPs/meeting-processing.md` |
 | Weekly review | `SOPs/weekly-review.md` |
 | Name → folder mapping | `_templates/project-mapping.md` |
-| File templates | `_templates/` (profile, strategy, activity-log) |
+| Area template | `_templates/area-profile.md` |
+| Project template | `_templates/project-brief.md` |
+| Activity log template | `_templates/activity-log.md` |
+| Daily note template | `_templates/daily-note.md` |
 | Solution documentation format | `_templates/solution.md` |
 | Available automations | `SOPs/available-automations.md` |
 
 ## Vault Structure
 
 ```
-[WORK_FOLDER]/
-└── {name}/
-    ├── profile.md        — Context, contacts, scope, goals
+Projects/
+└── {slug}/
+    ├── brief.md          — Goal, scope, deadline, deliverables, stakeholders
     ├── activity-log.md   — Chronological work log (newest first)
-    ├── strategy.md       — Current priorities, metrics, engagement details
-    └── meetings/         — Individual meeting note files (YYYY-MM-DD-topic.md)
+    └── meetings/         — Meeting note files (YYYY-MM-DD-topic.md)
+
+Areas/
+└── {slug}/
+    ├── profile.md        — Context, contacts, overview, status
+    ├── strategy.md       — Current goals, priorities, engagement details
+    ├── activity-log.md   — Chronological work log (newest first)
+    └── meetings/         — Meeting note files (YYYY-MM-DD-topic.md)
+
+Archives/
+├── Projects/             — Completed/inactive projects (move from Projects/)
+└── Areas/                — Completed/inactive areas (move from Areas/)
 ```
 
-- `[WORK_FOLDER]/_overview.md` — Your role, tools, and workflow notes
+- `_overview.md` — Your role, tools, and workflow notes
 - `SOPs/` — Standard operating procedures
 - `_templates/` — File format templates
-- `_daily/` — Cross-[WORK_UNIT] daily session journals
+- `_daily/` — Cross-item daily session journals
 - `_solutions/` — Cross-cutting problem→solution documentation (searchable by problem type and tags)
 
 ## Data Sources

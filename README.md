@@ -11,7 +11,7 @@ A personal knowledge base powered by [Obsidian](https://obsidian.md) and [Claude
 - **Knowledge compounding:** Solved problems are documented and auto-retrieved next time
 - **Daily journal:** Cross-project continuity between sessions
 
-Works for anyone — freelancers, consultants, developers, designers, project managers, lawyers, anyone managing ongoing work.
+Works for anyone — freelancers, consultants, developers, designers, project managers, lawyers, anyone managing ongoing work across multiple clients, teams, and personal goals.
 
 ## Getting started
 
@@ -25,13 +25,18 @@ The wizard asks your name, what you do, and what tools you use. Quick setup take
 ## What's inside
 
 ```
+Projects/               — Time-bound work with a clear goal (one folder per project)
+Areas/                  — Ongoing responsibilities: clients, roles, personal domains
+Archives/               — Completed or inactive projects and areas
 CLAUDE.md               — Automation rules Claude follows
-_templates/             — File templates (profiles, strategies, meeting notes, solutions)
+_templates/             — File templates (area profiles, project briefs, meeting notes, solutions)
 SOPs/                   — Workflows (meeting processing, weekly review, automations)
 _setup/                 — Setup wizard and permissions
 _daily/                 — Daily session journals
 _solutions/             — Reusable problem→solution documentation
 ```
+
+Organized using [PARA](https://fortelabs.com/blog/para/) (Projects, Areas, Resources, Archives).
 
 ## Requirements
 

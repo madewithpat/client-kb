@@ -11,8 +11,8 @@ What we're trying to achieve right now.
 ## KPIs & Metrics
 How we measure success. Include baselines and targets where known.
 
-## Retainer / Engagement Details
-Scope, timeline, budget, contract terms — whatever defines the working relationship.
+## Engagement Details
+Scope, timeline, budget, or whatever defines this relationship or responsibility.
 
 ## Active Initiatives
 What's in progress right now.
