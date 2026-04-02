@@ -27,6 +27,7 @@ Claude should treat this KB as the single source of truth for all project and ar
 2. Based on Category:
    - **Area**: Read `profile.md` — gives you context, contacts, scope, status. If planning or strategy is discussed, also read `strategy.md`. If recent history is relevant, read `activity-log.md`.
    - **Project**: Read `brief.md` — gives you goal, scope, deadline, deliverables. If recent history is relevant, read `activity-log.md`. If the project has a Parent Area, also read that area's `profile.md` for relationship context.
+3. If Todoist is connected (check Data Sources below) and the item has a `Todoist Project ID` in the mapping, silently call `mcp__todoist__find-tasks` with that project ID to fetch open tasks. Use this to understand current workload and actual status — it reflects ground truth that activity logs may not capture yet.
 
 Do this silently. Do not tell [YOUR_NAME] you're reading files — just have the context ready.
 
@@ -87,6 +88,28 @@ After completing meaningful work for a project or area during a session, **autom
 **Do NOT log:** File formatting, quick lookups, reading files, minor edits.
 
 Write **rich** entries — not just "did X" but "did X because Y, result was Z, next step is W." These feed into weekly reviews.
+
+---
+
+## Auto-Create Tasks: Todoist Integration
+
+If Todoist is connected (see Data Sources), offer to push action items to Todoist when they arise naturally.
+
+**When to offer:**
+- After processing meeting notes — for [YOUR_NAME]-owned action items identified in the transcript
+- After planning or strategy sessions — for next steps assigned to [YOUR_NAME]
+- When [YOUR_NAME] explicitly says "add a task", "remind me to", or similar
+
+**How:**
+1. Identify the relevant project/area from the current conversation context.
+2. Look up its `Todoist Project ID` from `_templates/project-mapping.md`.
+3. Show [YOUR_NAME] the proposed tasks and ask for confirmation: "Want me to add these [N] tasks to Todoist?"
+4. On confirmation, call `mcp__todoist__add-tasks` with the tasks and the mapped `projectId`.
+5. Report: "Added [N] tasks to [project name] in Todoist."
+
+**Never create tasks silently.** Always confirm with [YOUR_NAME] before calling `add-tasks`.
+
+If an item has no `Todoist Project ID` in the mapping, ask: "Which Todoist project should I use for these?" Offer to update the mapping with the ID afterward.
 
 ---
 
