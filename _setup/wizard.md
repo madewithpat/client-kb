@@ -207,11 +207,29 @@ Use AskUserQuestion (multi-select):
 
 **Task manager:**
 1. Ask: "Which task manager?" (free text)
-2. If Todoist: "Grab your API token from Settings > Integrations > Developer. Paste it here."
-   - Add to `.env`
-   - Add curl permission to settings.local.json
-   - Test: fetch projects
-   - Report: "✓ Todoist connected — [N] projects found"
+2. If Todoist:
+   a. Tell [YOUR_NAME]: "Run this in your terminal to connect Todoist via MCP:"
+      ```
+      claude mcp add --transport http todoist https://ai.todoist.net/mcp
+      ```
+      This opens an OAuth browser flow — they'll authorize Claude's access to Todoist.
+   b. Wait for confirmation that the command ran, then add Todoist MCP permissions to `.claude/settings.local.json`:
+      ```json
+      "mcp__todoist__get-overview",
+      "mcp__todoist__find-tasks",
+      "mcp__todoist__find-projects",
+      "mcp__todoist__find-completed-tasks",
+      "mcp__todoist__add-tasks",
+      "mcp__todoist__add-projects",
+      "mcp__todoist__update-tasks",
+      "mcp__todoist__complete-tasks"
+      ```
+   c. Test: call `mcp__todoist__get-overview` — confirm it returns projects and tasks.
+   d. Report: "✓ Todoist connected — I can see [N] projects"
+   e. Append to the Data Sources section in `CLAUDE.md`:
+      ```
+      - **Todoist** — task and project manager. Use `mcp__todoist__*` tools. Always look up the item's `Todoist Project ID` from `_templates/project-mapping.md` before creating or fetching tasks.
+      ```
 3. Other: "I don't have a built-in integration for [tool], but you can always ask me to create tasks and I'll tell you what to add."
 
 **None selected:**

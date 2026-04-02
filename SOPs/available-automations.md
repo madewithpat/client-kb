@@ -33,6 +33,7 @@ Read the SOP at `[VAULT_ROOT]/SOPs/weekly-review.md`.
    - What was done
    - Meeting outcomes
    - Key decisions or changes
+   - If Todoist is connected and the item has a `Todoist Project ID`: include open task count (call `mcp__todoist__find-tasks` with `projectId`) and tasks completed this week (call `mcp__todoist__find-completed-tasks` with `projectId`)
    - Next steps
    - Length: 3-5 sentences for high activity, 1-2 for low
 6. Present the review for [YOUR_NAME]'s approval.
@@ -147,7 +148,7 @@ Mid-week safety check for [YOUR_NAME]'s knowledge base.
 1. Read `[VAULT_ROOT]/_templates/project-mapping.md` for all projects and areas.
 
 2. Gather data (in parallel where possible):
-   a. If task manager connected: active tasks per item — collect overdue, severely overdue (14+ days), and stale tasks (no due date, 21+ days old)
+   a. If Todoist is connected (check Data Sources in CLAUDE.md): for each item with a `Todoist Project ID` in `[VAULT_ROOT]/_templates/project-mapping.md`, call `mcp__todoist__find-tasks` with `projectId` and `filter: "overdue"` to get overdue tasks. Also call with `filter: "no date & added before: -21 days"` to find stale tasks with no due date. Collect results per item — overdue tasks (1-6 days = normal, 7+ = critical, 14+ = stale).
    b. If calendar connected: meetings from last 7 days — filter to external meetings
    c. KB meeting notes: glob for files with date prefixes matching last 7 days across all Projects/ and Areas/ meetings/ folders
    d. KB activity logs: read first 30 lines of each item's activity-log.md (path from Folder column) to find most recent entry date
@@ -164,7 +165,7 @@ Mid-week safety check for [YOUR_NAME]'s knowledge base.
 4. Report grouped by severity: URGENT → NEEDS ATTENTION → REVIEW → SUMMARY.
    If all clear: "No forgotten items found."
 
-5. Offer to create tasks for orphaned action items.
+5. Offer to create tasks for orphaned action items. If Todoist is connected, use `mcp__todoist__add-tasks` with the item's `Todoist Project ID` from the mapping to place them in the correct project. Always confirm with [YOUR_NAME] before creating tasks.
 ```
 
 ---
